@@ -5,7 +5,8 @@ CREATE TABLE users (ID_USER int not null primary key auto_increment,
 					USERNAME varchar(12) unique not null,
                     PASSWORD varchar(255) not null,
                     EMAIL varchar(255) not null,
-                    ROLE tinyint not null);
+                    ROLE tinyint not null),
+					NAME varchar(35) not null;
 
 CREATE TABLE accountant (ID_ACCOUNTANT int not null primary key auto_increment,
 						ID_USER int not null,

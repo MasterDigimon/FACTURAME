@@ -1,12 +1,11 @@
 import express from "express"
 import mysql from "mysql2";
+import cors from "cors";
 
 
 const app = express();
 
-app.listen(8800, ()=>{
-    console.log("Conectado a Backend")
-});
+app.use(cors());
 
 
 const db = mysql.createConnection({
@@ -20,6 +19,26 @@ app.get("/", (req, res)=>{
     res.json("Hello, this is the Backend")
 });
 
+app.get("/DashboardContador", (req, res) => {
+    const contador = req.query.contador;
+    let sqlPendientes = "SELECT id_invoices, amount, date FROM invoices WHERE status = 0 AND id_accountant = ?"
+    let sqlCompletadas = "SELECT id_invoices, amount, date FROM invoices WHERE status = 1 AND id_accountant = ?"
+
+    db.query(sqlPendientes, [contador], (err, pendientes) => {
+        if (err) return res.json(err);
+    
+        db.query(sqlCompletadas, [contador], (err, completadas) => {
+            if (err) return res.json(err);
+
+
+            res.json({
+                pendientes: pendientes,
+                completadas: completadas
+            });
+        });
+    });
+});
+
 app.get("/users", (req, res)=>{
     const q = "SELECT * FROM users"
     db.query(q, (err, data)=>{
@@ -28,23 +47,7 @@ app.get("/users", (req, res)=>{
     })
 });
 
-/*
-app.post("/create", (req, res)=>{
-    const username = req.body.user;
-    const password = req.body.user;
-    const email = req.body.user;
-    const role = req.body.user;
-
-
-    db.query('INSERT INTO users(username, password, email, role) VALUES (?,?,?,?)', [username, password, email, role],
-        (err, result)=>{
-            if(err){
-                console.log(err);
-            }else{
-                res.send("Usuario registrado");
-            }
-        }
-    )
+app.listen(8800, ()=>{
+    console.log("Conectado a Backend")
 });
 
-*/

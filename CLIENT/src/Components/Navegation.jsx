@@ -15,6 +15,9 @@ function Navegation() {
           <li>
             <Link to="/Facturas"><div className='mx-4 mt-6'>Facturas</div></Link>
           </li>
+          <li>
+            <Link to="/Clientes"><div className='mx-4 mt-6'>Clientes</div></Link>
+          </li>
         </ul>
 
         <Link className='flex' to="">
