@@ -8,6 +8,6 @@ import Navegation from './Components/Navegation.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     
-    <Navegation />
+    <App />
   </StrictMode>,
 )
